@@ -70,7 +70,8 @@ else{
         <div class="card-body">
           <h5 class="card-title">${phone.phone_name}</h5>
           <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <button onclick="loadphoneDetails('${phone.slug}')" href="#" class="btn btn-primary">Shoe Detalis</button>
+          <button onclick="loadphoneDetails('${phone.slug}')" href="#" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#phoneDetailModal">Shoe Detalis</button>
+          
         </div>
       </div>
         `;
@@ -147,14 +148,27 @@ const loadphoneDetails =async id =>{
     const url =`https://openapi.programming-hero.com/api/phone/${id}`
     const res = await fetch(url);
     const data = await res.json();
-    console.log(data.data)
+    dispalyPhoneDetails(data.data)
 }
 
 
+const dispalyPhoneDetails = phone =>{
+console.log(phone)
+const modalTitel = document.getElementById('phoneDetailModalLabel');
+modalTitel.innerText=phone.name;
+const phonedetails = document.getElementById('pho-details');
+phonedetails.innerHTML=`
+<P>RELEASE DATE: ${phone.releaseDate ?  phone.releaseDate : 'no releasedat'
+}</p>
+
+<p>Others:${phone.others?phone.others.Bluetooth:"no bluetooth"}
+
+`
+
+}
 
 
-
-// loadPhones()
+loadPhones('apple')
 
 
 
